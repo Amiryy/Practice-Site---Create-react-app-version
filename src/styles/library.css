@@ -5,13 +5,45 @@
     position: relative;
     top: 150px;
 }
+@keyframes form-slide-down {
+    0% {
+        transform: translateY(-20%);
+        height: 0;
+    }
+    100% {
+        transform: translateY(0%);
+        height: 100%;
+    }
+}
 
+@keyframes form-slide-up {
+    0% {
+        transform: translateY(0%);
+        height: 100%;
+    }
+    100% {
+        transform: translateY(-20%);
+        height: 0;
+    }
+}
 #post-form{
     position: relative;
     width: 50%;
     margin:auto;
     top: 180px;
 }
+#book-form.visible {
+    animation: form-slide-down 0.5s forwards;
+    display: block;
+    opacity: 1;
+    transition: opacity 1s;
+}
+#book-form.hidden {
+    animation: form-slide-up 0.2s forwards;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
 #database {
     position: relative;
     width: 50%;

@@ -11,22 +11,12 @@ a, a:visited{
 
 body {
     background-color: #41467F;
-    font-family: 'Droid Sans', sans-serif;
     color: aliceblue;
     line-height: 2.5em;
     text-align: center;
 }
 
-#cover{
-    background-color: #17192E;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    z-index: 1100;
-}
-
-
-div.nav {
+div.navbar {
     padding: 20px 50px;
     border: 10px groove #212340;
     background-color: #212340;
@@ -34,24 +24,48 @@ div.nav {
     right:0;
     left:0;
     z-index: 1001;
-}
-    
+} 
 .navbutton {
    cursor:pointer;
    padding: 20px 50px;
    display: inline;
    font-family: 'Amatic SC', cursive;
    font-size: 24px;
-   letter-spacing: 0.04em;
-   font-weight: 600;     
+   letter-spacing: 0.07em;
+   font-weight: 600;
+   opacity: 1;  
+   -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;   
 }
 
+.navbutton:hover {
+    opacity: 0.4;
+}
+.buttonframe {
+    display: inline-block;
 
+}
+@keyframes slide-down {
+    0% {
+        transform: translateY(-25%);
+    }
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+@keyframes slide-up {
+    0% {
+        transform: translateY(0%);
+    }
+    100% {
+        transform: translateY(-200%);
+    }
+}
 #projects-list{
     background-color: #212340;
     padding: 10px 40px;
     border: 10px groove #212340;
-    display: block;
     position: fixed;
     top: 10%;
     left:39.5%;
@@ -59,10 +73,27 @@ div.nav {
     font-size: 18px;
     letter-spacing: 0.04em;
     font-weight: 600;
-    z-index: 1001;
+    z-index: 1000;
+    transition: opacity 0.1s;
+
 }
-
-
+#projects-list.visible {
+    animation: slide-down 0.5s forwards;
+    opacity: 1;
+}
+#projects-list.hidden {
+    animation: slide-up 0.75s forwards;
+    opacity: 0;
+}
+.slidebutton{
+    cursor:pointer;
+    opacity: 1;  
+   -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;   
+}
+.slidebutton:hover {
+    opacity: 0.4;
+}
 
 .left-side {
     border: 7px solid #212340;
@@ -76,6 +107,8 @@ div.nav {
     background-image: url("./images/IMG_8683.png");
     background-size: cover;
     opacity: 0.8;
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
 }
 
 .left-side:hover {
@@ -95,14 +128,17 @@ div.nav {
     background-image: url("./images/bridge.jpg");
     background-size: cover;
     opacity: 0.8;
-
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
 }
 .right-side:hover {
     opacity: 1;
 }
 
 
-.intro {
+.intro, .about {
+    padding: 10px;
+    font-family: 'Droid Sans', sans-serif;
     position: relative;
     top: 120px;
     width: 50%;
@@ -149,6 +185,10 @@ button{
 button:focus{
     outline: none;
     
+}
+
+button:active {
+    opacity: 0.7;
 }
 
 .about {
