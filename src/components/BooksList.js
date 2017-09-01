@@ -54,7 +54,8 @@ class BooksList extends React.Component {
                              title={book.title}
                              author={book.author}
                              genre={book.genre}
-                             read={book.read} /> 
+                             read={book.read}
+                             info={book.info}/>
                     )
                 : <h4>Books will be shown here...</h4>}
    			    {this.state.getError ? <h4>Failed to get the data. Please check the log for errors.</h4> : ''}

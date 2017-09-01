@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/main.css';
+import '../styles/library.css';
 
 class Book extends React.Component{
     constructor (props){
@@ -12,11 +12,15 @@ class Book extends React.Component{
             author: this.props.author,
             genre: this.props.genre,
             read: this.props.read,
+            info: this.props.info,
             editTitle: this.props.title,
             editAuthor: this.props.author,
             editGenre: this.props.genre,
-            editRead: this.props.read
-        }
+            editRead: this.props.read,
+            editInfo: this.props.info
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.extractRootDomain = this.extractRootDomain.bind(this);
     }
     deleteBook () {
         fetch(this.state.api + '/' + this.props.id, {
@@ -39,7 +43,8 @@ class Book extends React.Component{
             editTitle: this.props.title,
             editAuthor: this.props.author,
             editGenre: this.props.genre,
-            editRead: this.props.read
+            editRead: this.props.read,
+            editInfo: this.props.info
         })
     }
     saveBook () {
@@ -48,7 +53,8 @@ class Book extends React.Component{
             title: this.state.editTitle,
             author: this.state.editAuthor,
             genre: this.state.editGenre,
-            read: this.state.editRead
+            read: this.state.editRead,
+            info: this.state.editInfo
         });
         fetch(this.state.api + '/' + this.props.id, {
             headers: {
@@ -64,19 +70,9 @@ class Book extends React.Component{
             })                                        
         })
     }
-    handleTitleChange (e) {
+    handleChange (e) {
         this.setState({
-            editTitle : e.target.value
-        });
-    }
-    handleAuthorChange (e) {
-        this.setState({
-            editAuthor: e.target.value
-        });
-    }
-    handleGenreChange (e) {
-        this.setState({
-             editGenre : e.target.value
+            [e.target.name]: e.target.value
         });
     }
     handleReadChange () {
@@ -84,24 +80,64 @@ class Book extends React.Component{
              editRead : !this.state.editRead
         });
     }
+    extractHostname(url) {
+        let hostname;
+        //find & remove protocol (http, ftp, etc.) and get hostname
+        if (url.indexOf("://") > -1) {
+            hostname = url.split('/')[2];
+        }
+        else {
+            hostname = url.split('/')[0];
+        }
+        //find & remove port number
+        hostname = hostname.split(':')[0];
+        //find & remove "?"
+        hostname = hostname.split('?')[0];
+        return hostname;
+    }
+    extractRootDomain(url) {
+        let domain = this.extractHostname(url),
+            splitArr = domain.split('.'),
+            arrLen = splitArr.length;
+
+        //extracting the root domain here
+        if (arrLen > 2) {
+            domain = splitArr[arrLen - 2] + '.' + splitArr[arrLen - 1];
+        }else if(this.state.info === '' ){
+            return 'No Source';
+        }
+        return domain;
+    }
     render() {
         return(
             <li key={this.props.id}
                 className={(this.state.edit ? 'edit' : '') + (this.state.deleted ? 'hidden' : '')} >
                 <p><span className="noedit title">{this.state.title}</span>
                     <input type="text" className="edit title"
+                           name="editTitle"
                            value={this.state.editTitle} 
-                           onChange={this.handleTitleChange.bind(this)}/>
+                           onChange={this.handleChange}/>
                 </p>
                 <p>Author: <span className="noedit author">{this.state.author}</span>
                     <input type="text" className="edit author"
+                           name="editAuthor"
                            value={this.state.editAuthor} 
-                           onChange={this.handleAuthorChange.bind(this)}/>
+                           onChange={this.handleChange}/>
                 </p>
                 <p>Genre: <span className="noedit genre">{this.state.genre}</span>
                     <input type="text" className="edit genre"
+                           name="editGenre"
                            value={this.state.editGenre} 
-                           onChange={this.handleGenreChange.bind(this)}/>
+                           onChange={this.handleChange}/>
+                </p>
+                <p className="info">About: <a href={this.state.info==='' ? '#' : this.state.info}
+                                              rel="noopener noreferrer"
+                                              target={this.state.info==='' ? '_self' : '_blank'}
+                                              className="noedit info">{this.extractRootDomain(this.state.info)}</a>
+                    <input type="text" className="edit info"
+                           name="editInfo"
+                           value={this.state.editInfo}
+                           onChange={this.handleChange}/>
                 </p>
                 <p>Read: <span className="noedit read">{this.state.read ? "Yes":"No"}</span>
                     <input type="checkbox" 

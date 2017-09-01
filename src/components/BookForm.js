@@ -9,23 +9,14 @@ class BookForm extends React.Component{
             title : '',
             author : '',
             genre : '',
-            read : false
-        }
+            read : false,
+            info: ''
+        };
+        this.handleChange = this.handleChange.bind(this);
     }
-
-    handleTitleChange (e) {
+    handleChange (e) {
         this.setState({
-            title : e.target.value
-        });
-    }
-    handleAuthorChange (e) {
-        this.setState({
-            author: e.target.value
-        });
-    }
-    handleGenreChange (e) {
-        this.setState({
-             genre : e.target.value
+            [e.target.id] : e.target.value
         });
     }
     handleReadChange () {
@@ -40,7 +31,8 @@ class BookForm extends React.Component{
             title : '',
             author : '',
             genre : '',
-            read : false
+            read : false,
+            info: '',
         });
     }
     postRequest () {
@@ -53,7 +45,8 @@ class BookForm extends React.Component{
               title: this.state.title,
               author: this.state.author,
               genre: this.state.genre,
-              read: this.state.read
+              read: this.state.read,
+              info: this.state.info
             })
         });
         let postMessage = `<p>${this.state.title} has been added.</p>`
@@ -68,27 +61,35 @@ class BookForm extends React.Component{
                                        id="title" 
                                        autoComplete="off"
                                        value={this.state.title}
-                                       onChange={this.handleTitleChange.bind(this)} />
+                                       onChange={this.handleChange} />
                     </p>
                     <p>Author: <input type="text"
                                        id="author" 
                                        autoComplete="off"
                                        value={this.state.author}
-                                       onChange={this.handleAuthorChange.bind(this)} />
-                      </p>
+                                       onChange={this.handleChange} />
+                    </p>
                       <p>Genre: <input type="text"
                                        id="genre" 
                                        autoComplete="off"
                                        value={this.state.genre}
-                                       onChange={this.handleGenreChange.bind(this)} />
-                      </p>
-                      <p>Read? <input type="checkbox"
+                                       onChange={this.handleChange} />
+                    </p>
+                    <p>Information source:
+                        <input type="text"
+                               id="info"
+                               autoComplete="off"
+                               value={this.state.info}
+                               onChange={this.handleChange} />
+                    </p>
+                     <p>Read? <input type="checkbox"
                                       id="read"
                                       value={this.state.read} 
                                       checked={this.state.read}
                                       onChange={this.handleReadChange.bind(this)}/>
                                 <label htmlFor="read"></label>
-                      </p>
+                    </p>
+
                 </div>
                 <button id="book-send" 
                         onClick={this.handleSend.bind(this)}>

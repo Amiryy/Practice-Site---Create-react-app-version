@@ -129,3 +129,8 @@ li.edit .edit{
 li.edit .noedit{
     display: none;
 }
+
+.info {
+     overflow: hidden;
+     max-height: 50px;
+ }
