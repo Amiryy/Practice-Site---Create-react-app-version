@@ -1,3 +1,7 @@
+This project includes the book library app that communicates with this books api:
+[node-environment-library](https://github.com/Amiryy/node-environment-library).
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
